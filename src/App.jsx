@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { db } from "./firebase";
 import { ref, get, runTransaction, set } from "firebase/database";
 import "./App.css";
+import pragyaImg from "./assets/pragya.jpg"; // import image
 
 function App() {
   const [amount, setAmount] = useState("");
@@ -11,7 +12,6 @@ function App() {
   const MAX_AMOUNT = 100;
   const TARGET_AMOUNT = 1000; // Target donation
 
-  // Fetch total donations on load
   useEffect(() => {
     const totalRef = ref(db, "totalDonated");
     get(totalRef).then((snapshot) => {
@@ -22,7 +22,6 @@ function App() {
   const handleDonate = () => {
     const numAmount = Number(amount);
 
-    // Basic validation
     if (!numAmount || numAmount <= 0) {
       setError("Please enter a valid amount");
       return;
@@ -33,7 +32,6 @@ function App() {
       return;
     }
 
-    // Check if donation would exceed target
     if (total + numAmount > TARGET_AMOUNT) {
       setError(
         `Cannot donate NPR ${numAmount}. Only NPR ${
@@ -55,7 +53,7 @@ function App() {
 
   const handleAmountChange = (value) => {
     setAmount(value);
-    setError(""); // Clear error on input change
+    setError("");
   };
 
   const handleResetCampaign = () => {
@@ -82,6 +80,11 @@ function App() {
           <p className="celebration-text">
             Total donations collected: <strong>NPR {total}</strong>
           </p>
+
+          {/* Image in congratulations */}
+          <div className="celebration-image-container">
+            <img src={pragyaImg} alt="Pragya" className="celebration-image" />
+          </div>
 
           <button
             className="donate-btn reset-btn"
@@ -119,7 +122,6 @@ function App() {
                 />
               </div>
 
-              {/* Inline error message */}
               {error && <p className="error-message">{error}</p>}
 
               <div className="amount-grid">
