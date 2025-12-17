@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { db } from "./firebase";
-import { ref, get, runTransaction } from "firebase/database";
+import { ref, get, runTransaction, set } from "firebase/database";
 import "./App.css";
 
 function App() {
@@ -9,8 +9,9 @@ function App() {
   const [total, setTotal] = useState(0);
   const [error, setError] = useState("");
   const MAX_AMOUNT = 100;
-  const TARGET_AMOUNT = 20000; // Target donation
+  const TARGET_AMOUNT = 200; // Target donation
 
+  // Fetch total donations on load
   useEffect(() => {
     const totalRef = ref(db, "totalDonated");
     get(totalRef).then((snapshot) => {
@@ -20,19 +21,24 @@ function App() {
 
   const handleDonate = () => {
     const numAmount = Number(amount);
+
+    // Basic validation
     if (!numAmount || numAmount <= 0) {
       setError("Please enter a valid amount");
       return;
     }
+
     if (numAmount > MAX_AMOUNT) {
       setError(`Maximum donation amount is NPR ${MAX_AMOUNT}`);
       return;
     }
+
+    // Check if donation would exceed target
     if (total + numAmount > TARGET_AMOUNT) {
       setError(
         `Cannot donate NPR ${numAmount}. Only NPR ${
           TARGET_AMOUNT - total
-        } needed to reach target`
+        } needed to reach the target`
       );
       return;
     }
@@ -49,7 +55,17 @@ function App() {
 
   const handleAmountChange = (value) => {
     setAmount(value);
-    setError("");
+    setError(""); // Clear error on input change
+  };
+
+  const handleResetCampaign = () => {
+    const totalRef = ref(db, "totalDonated");
+    set(totalRef, 0).then(() => {
+      setTotal(0);
+      setDonated(false);
+      setAmount("");
+      setError("");
+    });
   };
 
   const targetReached = total >= TARGET_AMOUNT;
@@ -66,6 +82,14 @@ function App() {
           <p className="celebration-text">
             Total donations collected: <strong>NPR {total}</strong>
           </p>
+
+          <button
+            className="donate-btn reset-btn"
+            onClick={handleResetCampaign}
+          >
+            Reset Campaign
+          </button>
+
           <div className="confetti-target">
             {[...Array(100)].map((_, i) => (
               <span key={i}></span>
@@ -95,6 +119,7 @@ function App() {
                 />
               </div>
 
+              {/* Inline error message */}
               {error && <p className="error-message">{error}</p>}
 
               <div className="amount-grid">
