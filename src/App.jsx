@@ -9,7 +9,7 @@ function App() {
   const [total, setTotal] = useState(0);
   const [error, setError] = useState("");
   const MAX_AMOUNT = 100;
-  const TARGET_AMOUNT = 200; // Target donation
+  const TARGET_AMOUNT = 1000; // Target donation
 
   // Fetch total donations on load
   useEffect(() => {
