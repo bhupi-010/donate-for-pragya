@@ -1,0 +1,179 @@
+/* ---- Base ---- */
+* {
+  box-sizing: border-box;
+  font-family: "Inter", "Segoe UI", sans-serif;
+}
+
+body {
+  margin: 0;
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+}
+
+.container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ---- Card ---- */
+.donation-card {
+  background: #ffffff;
+  padding: 2.8rem;
+  border-radius: 20px;
+  width: 420px;
+  text-align: center;
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.25);
+  transition: transform 0.6s ease;
+}
+
+.donation-card.success-mode {
+  transform: scale(1.04);
+}
+
+/* ---- Text ---- */
+.title {
+  font-size: 2rem;
+  margin-bottom: 0.4rem;
+  color: #222;
+}
+
+.subtitle {
+  color: #555;
+  margin-bottom: 2rem;
+  font-size: 1rem;
+}
+
+/* ---- Floating Input ---- */
+.amount-field {
+  position: relative;
+  margin-bottom: 1.6rem;
+}
+
+.amount-field input {
+  width: 100%;
+  padding: 16px 14px 16px 60px;
+  font-size: 1.1rem;
+  border-radius: 14px;
+  border: 2px solid #ddd;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.amount-field input:focus {
+  border-color: #2575fc;
+}
+
+.amount-field label {
+  position: absolute;
+  left: 60px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #999;
+  font-size: 0.95rem;
+  pointer-events: none;
+  transition: 0.3s ease;
+}
+
+.amount-field input:focus + label,
+.amount-field input:not(:placeholder-shown) + label {
+  top: -8px;
+  left: 52px;
+  background: white;
+  padding: 0 6px;
+  font-size: 0.8rem;
+  color: #2575fc;
+}
+
+.currency {
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-weight: bold;
+  color: #2575fc;
+}
+
+/* ---- Amount Cards ---- */
+.amount-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  margin-bottom: 1.8rem;
+}
+
+.amount-card {
+  padding: 14px;
+  border-radius: 14px;
+  border: 2px solid #eee;
+  background: #fafafa;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.amount-card:hover {
+  border-color: #2575fc;
+  transform: translateY(-2px);
+}
+
+.amount-card.active {
+  background: linear-gradient(135deg, #2575fc, #6a11cb);
+  color: white;
+  border-color: transparent;
+}
+
+/* ---- CTA ---- */
+.donate-btn {
+  width: 100%;
+  padding: 16px;
+  border-radius: 16px;
+  border: none;
+  background: linear-gradient(135deg, #ff512f, #dd2476);
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(221, 36, 118, 0.4);
+  transition: transform 0.2s ease;
+}
+
+.donate-btn:hover {
+  transform: translateY(-2px);
+}
+
+/* ---- Success ---- */
+.success-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.checkmark {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: #4caf50;
+  margin: 0 auto 1.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: pop 0.6s ease-out;
+}
+
+.checkmark span {
+  font-size: 3.2rem;
+  color: white;
+}
+
+/* ---- Animations ---- */
+@keyframes pop {
+  0% {
+    transform: scale(0);
+  }
+  80% {
+    transform: scale(1.15);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
